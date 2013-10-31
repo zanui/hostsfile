@@ -13,9 +13,9 @@ describe Manipulator do
 
   let(:entries) do
     [
-      double('entry_1', ip_address: '127.0.0.1', hostname: 'localhost',       to_line: '127.0.0.1  localhost',     priority: 10),
-      double('entry_2', ip_address: '1.2.3.4',   hostname: 'example.com',     to_line: '1.2.3.4  example.com',     priority: 20),
-      double('entry_3', ip_address: '4.5.6.7',   hostname: 'foo.example.com', to_line: '4.5.6.7  foo.example.com', priority: 30)
+      double('entry_1', :ip_address => '127.0.0.1', :hostname => 'localhost',       :to_line => '127.0.0.1  localhost',     :priority => 10),
+      double('entry_2', :ip_address => '1.2.3.4',   :hostname => 'example.com',     :to_line => '1.2.3.4  example.com',     :priority => 20),
+      double('entry_3', :ip_address => '4.5.6.7',   :hostname => 'foo.example.com', :to_line => '4.5.6.7  foo.example.com', :priority => 30)
     ]
   end
 
@@ -59,7 +59,7 @@ describe Manipulator do
   describe '#add' do
     let(:entry) { double('entry') }
 
-    let(:options) { { ip_address: '1.2.3.4', hostname: 'example.com', aliases: nil, comment: 'Some comment', priority: 5 } }
+    let(:options) { { :ip_address => '1.2.3.4', :hostname => 'example.com', :aliases => nil, :comment => 'Some comment', :priority => 5 } }
 
     before { Entry.stub(:new).and_return(entry) }
 
@@ -81,7 +81,7 @@ describe Manipulator do
       end
 
       it 'does nothing' do
-        manipulator.update(ip_address: '5.4.3.2', hostname: 'seth.com')
+        manipulator.update(:ip_address => '5.4.3.2', :hostname => 'seth.com')
         expect(manipulator.instance_variable_get(:@entries)).to eq(entries)
       end
     end
@@ -95,13 +95,13 @@ describe Manipulator do
 
       it 'updates the hostname' do
         entry.should_receive(:hostname=).with('seth.com')
-        manipulator.update(ip_address: '1.2.3.4', hostname: 'seth.com')
+        manipulator.update(:ip_address => '1.2.3.4', :hostname => 'seth.com')
       end
     end
   end
 
   describe '#append' do
-    let(:options) { { ip_address: '1.2.3.4', hostname: 'example.com', aliases: nil, comment: 'Some comment', priority: 5 } }
+    let(:options) { { :ip_address => '1.2.3.4', :hostname => 'example.com', :aliases => nil, :comment => 'Some comment', :priority => 5 } }
 
     context 'when the record exists' do
       let(:entry) { double('entry', options.merge(:aliases= => nil, :comment= => nil)) }
@@ -118,13 +118,13 @@ describe Manipulator do
       it 'updates the aliases' do
         entry.should_receive(:aliases=).with(['www.example.com'])
         entry.should_receive(:hostname=).with('example.com')
-        manipulator.append(options.merge(aliases: 'www.example.com'))
+        manipulator.append(options.merge(:aliases => 'www.example.com'))
       end
 
       it 'updates the comment' do
         entry.should_receive(:comment=).with('Some comment, This is a new comment!')
         entry.should_receive(:hostname=).with('example.com')
-        manipulator.append(options.merge(comment: 'This is a new comment!'))
+        manipulator.append(options.merge(:comment => 'This is a new comment!'))
       end
     end
 
@@ -169,7 +169,7 @@ describe Manipulator do
   end
 
   describe '#save' do
-    let(:file) { double('file', write: true) }
+    let(:file) { double('file', :write => true) }
 
     before do
       File.stub(:open).and_yield(file)
