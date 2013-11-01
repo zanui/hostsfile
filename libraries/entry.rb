@@ -142,8 +142,8 @@ class Entry
   #   the string representation of this entry
   def to_s
     "#<#{self.class.to_s} " + [
-      "ip_address: '#{ip_address}'",
-      "hostname: '#{hostname}'",
+      ":ip_address => '#{ip_address}'",
+      ":hostname => '#{hostname}'",
     ].join(', ') + '>'
   end
 
@@ -153,12 +153,12 @@ class Entry
   #   the object representation of this entry
   def inspect
     "#<#{self.class.to_s} " + [
-      "ip_address: '#{ip_address}'",
-      "hostname: '#{hostname}'",
-      "aliases: #{aliases.inspect}",
-      "comment: '#{comment}'",
-      "priority: #{priority}",
-      "calculated_priority?: #{@calculated_priority}",
+      ":ip_address => '#{ip_address}'",
+      ":hostname => '#{hostname}'",
+      ":aliases => #{aliases.inspect}",
+      ":comment => '#{comment}'",
+      ":priority => #{priority}",
+      ":calculated_priority? => #{@calculated_priority}",
     ].join(', ') + '>'
   end
 
